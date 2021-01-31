@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="zh">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="author" content="陈火明" />
+
+        <meta property="og:type" content="article" />
+        <meta name="twitter:card" content="summary">
+
+<meta name="keywords" content="lvgl, yeah, " />
+
+<meta property="og:title" content="LVGL 内置字体 "/>
+<meta property="og:url" content="/my-super-post.html" />
+<meta property="og:description" content="Short version for index and feeds" />
+<meta property="og:site_name" content="陈火明的博客" />
+<meta property="og:article:author" content="陈火明" />
+<meta property="og:article:published_time" content="2021-01-31T10:20:00+01:00" />
+<meta property="og:article:modified_time" content="2021-10-04T18:40:00+02:00" />
+<meta name="twitter:title" content="LVGL 内置字体 ">
+<meta name="twitter:description" content="Short version for index and feeds">
+
+        <title>LVGL 内置字体  · 陈火明的博客
+</title>
+        <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="/theme/css/elegant.prod.css" media="screen">
+        <link rel="stylesheet" type="text/css" href="/theme/css/custom.css" media="screen">
+
+
+
+    </head>
+    <body>
+        <div id="content">
+            <div class="navbar navbar-static-top">
+                <div class="navbar-inner">
+                    <div class="container-fluid">
+                        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </a>
+                        <a class="brand" href="/"><span class=site-name>陈火明的博客</span></a>
+                        <div class="nav-collapse collapse">
+                            <ul class="nav pull-right top-menu">
+                                <li >
+                                    <a href=
+                                       "/"
+                                    >Home</a>
+                                </li>
+                                <li ><a href="/categories.html">Categories</a></li>
+                                <li ><a href="/tags.html">Tags</a></li>
+                                <li ><a href="/archives.html">Archives</a></li>
+                                <li><form class="navbar-search" action="/search.html" onsubmit="return validateForm(this.elements['q'].value);"> <input type="text" class="search-query" placeholder="Search" name="q" id="tipue_search_input"></form></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container-fluid">
+                <div class="row-fluid">
+                    <div class="span1"></div>
+                    <div class="span10">
+<article itemscope>
+<div class="row-fluid">
+    <header class="page-header span10 offset2">
+        <h1>
+            <a href="/my-super-post.html">
+                LVGL 内置字体
+            </a>
+        </h1>
+    </header>
+</div>
+
+<div class="row-fluid">
+        <div class="span8 offset2 article-content">
+            
+            <div class="section" id="id1">
+<h2>环境要求</h2>
+<ul class="simple">
+<li>python 3.6</li>
+<li>lv_font_conv</li>
+</ul>
+</div>
+<div class="section" id="install-python-3-6-on-ubuntu-16-04-from-ppa">
+<h2>Install python 3.6 on Ubuntu 16.04 from PPA</h2>
+<p>You can install Python 3.6  from PPA using the commands below</p>
+<pre class="literal-block">
+sudo add-apt-repository ppa:deadsnakes/ppa
+sudo apt update
+sudo apt install python3.6
+</pre>
+</div>
+<div class="section" id="install-lv-font-conv">
+<h2>Install lv_font_conv</h2>
+<p>如果系统上没有npm, 首先需要安装npm，运行如下指令</p>
+<pre class="literal-block">
+sudo apt install npm
+</pre>
+<p>安装lv_font_conv 如下</p>
+<pre class="literal-block">
+npm i lv_font_conv -g
+</pre>
+</div>
+<div class="section" id="python">
+<h2>利用Python编写脚本</h2>
+<p>lvgl-7.0.1/src/lv_font下的所有字体为内置字体, 由lvgl-7.0.1/scripts/built_in_font
+下的 generate_all.py脚本产生。分析代码可以发现最终是调用built_in_font_gen.py.这里
+只需要模拟generate_all.py即可.</p>
+<div class="section" id="id2">
+<h3>步骤如下</h3>
+<ul class="simple">
+<li>把字库Alibaba-PuHuiTi-Medium.ttf放到该目录下</li>
+<li>编写generate_alibaba.py</li>
+<li>./generate_alibaba.py</li>
+</ul>
+<p>这里的第三步骤运行Python会出现如下错误</p>
+<pre class="literal-block">
+/usr/local/lib/node_modules/lv_font_conv/lib/cli.js:113
+let [ , hex, dec ] = m;
+    ^
+
+SyntaxError: Unexpected token [
+  at exports.runInThisContext (vm.js:53:16)
+  at Module._compile (module.js:374:25)
+  at Object.Module._extensions..js (module.js:417:10)
+  at Module.load (module.js:344:32)
+  at Function.Module._load (module.js:301:12)
+  at Module.require (module.js:354:17)
+  at require (internal/module.js:12:17)
+  at Object.&lt;anonymous&gt; (/usr/local/lib/node_modules/lv_font_conv/lv_font_conv.js:7:1)
+  at Module._compile (module.js:410:26)
+  at Object.Module._extensions..js (module.js:417:10)
+</pre>
+<p>that is because your node version is incompatible with yarn.Check your node
+version with node -version if you have an older version of node then upgrade
+it to latest version by using，解决如下</p>
+<pre class="literal-block">
+sudo curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
+sudo apt-get install -y nodejs
+</pre>
+</div>
+</div>
+<div class="section" id="id3">
+<h2>把字库添加到工程</h2>
+<ul>
+<li><p class="first">生成得到字库文件之后，把文件放入lvgl-7.0.1/src/lv_font</p>
+</li>
+<li><p class="first">在lv_font.h添加字库声明</p>
+<div class="highlight"><pre><span></span><span class="cp">#if LV_FONT_PUHUI_22_ZH</span>
+<span class="n">LV_FONT_DECLARE</span><span class="p">(</span><span class="n">lv_font_puhui_22_zh</span><span class="p">)</span>
+<span class="cp">#endif</span>
+</pre></div>
+</li>
+<li><p class="first">当要使用该字库时，在lv_conf.h添加宏定义</p>
+<div class="highlight"><pre><span></span><span class="cm">/*内置阿里普惠字体*/</span>
+<span class="cp">#define LV_FONT_PUHUI_22_ZH      1</span>
+</pre></div>
+</li>
+<li><p class="first">lvgl中主题使用该字体</p>
+<div class="highlight"><pre><span></span><span class="cp">#define LV_THEME_DEFAULT_FONT_NORMAL        &amp;lv_font_puhui_22_zh</span>
+<span class="cp">#define LV_THEME_DEFAULT_FONT_SUBTITLE      &amp;lv_font_puhui_22_zh</span>
+<span class="cp">#define LV_THEME_DEFAULT_FONT_TITLE         &amp;lv_font_puhui_22_zh</span>
+</pre></div>
+</li>
+<li><p class="first">在工程中直接使用即可</p>
+</li>
+</ul>
+</div>
+
+
+
+             
+ 
+            
+            
+            
+
+
+
+
+
+
+            <hr/>
+        </div>
+        <section id="article-sidebar" class="span2">
+            <h4>Published</h4>
+            <time itemprop="dateCreated" datetime="2021-01-31T10:20:00+01:00">1月 31, 2021</time>
+<h4>Last Updated</h4>
+<time datetime="2021-10-04T18:40:00+02:00">10月 4, 2021</time>
+
+            <h4>Category</h4>
+            <a class="category-link" href="/categories.html#yeah-ref">yeah</a>
+            <h4>Tags</h4>
+            <ul class="list-of-tags tags-in-article">
+                <li><a href="/tags.html#lvgl-ref">lvgl
+                    <span>2</span>
+</a></li>
+            </ul>
+<h4>Contact</h4>
+<div id="sidebar-social-link">
+</div>
+            
+
+
+
+
+
+            
+
+
+
+
+
+        </section>
+</div>
+</article>
+                    </div>
+                    <div class="span1"></div>
+                </div>
+            </div>
+        </div>
+<footer>
+
+
+
+
+    <div id="fpowered">
+        Powered by: <a href="http://getpelican.com/" title="Pelican Home Page" target="_blank" rel="nofollow noopener noreferrer">Pelican</a>
+        Theme: <a href="https://elegant.oncrashreboot.com/" title="Theme Elegant Home Page" target="_blank" rel="nofollow noopener noreferrer">Elegant</a>
+    </div>
+</footer>            <script src="//code.jquery.com/jquery.min.js"></script>
+        <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+        <script>
+            function validateForm(query)
+            {
+                return (query.length > 0);
+            }
+        </script>
+
+    <script>
+    (function () {
+        if (window.location.hash.match(/^#comment-\d+$/)) {
+            $('#comment_thread').collapse('show');
+        }
+    })();
+    window.onhashchange=function(){
+        if (window.location.hash.match(/^#comment-\d+$/))
+            window.location.reload(true);
+    }
+    $('#comment_thread').on('shown', function () {
+        var link = document.getElementById('comment-accordion-toggle');
+        var old_innerHTML = link.innerHTML;
+        $(link).fadeOut(200, function() {
+            $(this).text('Click here to hide comments').fadeIn(200);
+        });
+        $('#comment_thread').on('hidden', function () {
+            $(link).fadeOut(200, function() {
+                $(this).text(old_innerHTML).fadeIn(200);
+            });
+        })
+    })
+</script>
+
+    </body>
+    <!-- Theme: Elegant built for Pelican
+        License : MIT -->
+</html>
